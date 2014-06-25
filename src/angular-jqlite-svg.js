@@ -3,8 +3,8 @@
 		throw new Error('unable to patch svg, angular not found');
 	}
 
-	var SINGLE_TAG_REGEXP = /^<(\w+)\s*\/?>(?:<\/\1>|)$/;
-	var TAG_NAME_REGEXP = /<([\w:]+)/;
+	var SINGLE_TAG_REGEXP = /^<([\w:-]+)\s*\/?>(?:<\/\1>|)$/;
+	var TAG_NAME_REGEXP = /<([\w:-]+)/;
 	var SVG_ELEMENTS = ['altGlyph', 'altGlyphDef', 'altGlyphItem', 'animate', 'animateColor', 'animateMotion', 'animateTransform', 'circle', 
 	'clipPath', 'color-profile', 'cursor', 'defs', 'desc', 'ellipse', 'feBlend', 'feColorMatrix', 'feComponentTransfer', 'feComposite', 
 	'feConvolveMatrix', 'feDiffuseLighting', 'feDisplacementMap', 'feDistantLight', 'feFlood', 'feFuncA', 'feFuncB', 'feFuncG', 
@@ -20,18 +20,22 @@
 
 	angular.element = function(elem){
 		var parsed;
+		var tagName;
 
 		if(angular.isString(elem)) {
-			if(parsed = SINGLE_TAG_REGEXP.exec(elem) && isSvgTag(parsed[1])) {
-				elem = [ 
-					document.createElementNS('http://www.w3.org/2000/svg', parsed[1]) 
-				];
+			if(parsed = SINGLE_TAG_REGEXP.exec(elem)) {
+				tagName = parsed[1];
+				if(isSvgTag(tagName)) {
+					elem = [ 
+						document.createElementNS('http://www.w3.org/2000/svg', tagName) 
+					];
+				}
 			} else if (parsed = buildSvgNodes(elem)) {
 				elem = parsed;
 			}
 		}
 
-		return elementFn.call(elem);
+		return elementFn.call(this, elem);
 	};
 
 	function isSvgTag(tagName) {
@@ -40,11 +44,14 @@
 
 	function buildSvgNodes(html) {
 		var parsed;
-
-		if(parsed = TAG_NAME_REGEXP.exec(html) && isSvgTag(parsed[1])) {
-			tmpDiv = tmpDiv || document.createElement('div');
-			tmpDiv.innerHTML = '<svg>' + html + '</svg>';
-			return tmpDiv.childNodes;
+		var tagName;
+		if(parsed = TAG_NAME_REGEXP.exec(html)) {
+			var tagName = parsed[1];
+			if(isSvgTag(tagName)) {
+				tmpDiv = tmpDiv || document.createElement('div');
+				tmpDiv.innerHTML = '<svg>' + html + '</svg>';
+				return tmpDiv.childNodes;
+			}
 		}
 
 		return null;

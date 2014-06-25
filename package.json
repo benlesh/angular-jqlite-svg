@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/blesh/angular-jqlite-svg/issues"
   },
-  "homepage": "https://github.com/blesh/angular-jqlite-svg"
+  "homepage": "https://github.com/blesh/angular-jqlite-svg",
+  "devDependencies": {
+    "karma": "^0.12.16",
+    "karma-jasmine": "^0.1.5",
+    "karma-chrome-launcher": "^0.1.4"
+  }
 }
