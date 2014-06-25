@@ -1,0 +1,24 @@
+{
+  "name": "angular-jqlite-svg",
+  "version": "0.0.0",
+  "description": "A patch for Angular.js to make JQLite function properly with SVG elements",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blesh/angular-jqlite-svg.git"
+  },
+  "keywords": [
+    "Angular.js",
+    "SVG",
+    "JQLite"
+  ],
+  "author": "Ben Lesh <ben@benlesh.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blesh/angular-jqlite-svg/issues"
+  },
+  "homepage": "https://github.com/blesh/angular-jqlite-svg"
+}
